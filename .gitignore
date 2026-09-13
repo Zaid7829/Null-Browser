@@ -1,0 +1,71 @@
+# Build & Output
+obj-*/
+dist/
+build/
+out/
+bin/
+target/
+*.obj
+*.o
+*.lib
+*.a
+*.exe
+*.dll
+*.so
+*.dylib
+*.pdb
+
+# Environment & Credentials
+.env
+.env.*
+*.key
+*.pem
+*.pfx
+*.p12
+*.cer
+*.crt
+*.token
+secrets/
+
+# IDE & Editors
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosv
+*.sln.docstates
+*.swp
+*.swo
+*~
+
+# Operating System Files
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+desktop.ini
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# Package & Dependency caches
+node_modules/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Logs & Dumps
+*.log
+npm-debug.log*
+yarn-debug.log*
+*.dmp
+*.dump
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+
+

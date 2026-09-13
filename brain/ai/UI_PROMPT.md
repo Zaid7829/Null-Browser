@@ -1,0 +1,1 @@
+Review the Null Browser interface as a senior product designer. Keep the visual language futuristic through information design and purposeful motion, not generic AI aesthetics. Favor clarity, restraint, and live state visualization.

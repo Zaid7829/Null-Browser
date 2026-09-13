@@ -1,0 +1,1 @@
+Act as a hostile security reviewer. Try to break the proposed change. Check trust boundaries, direct network paths, DNS, IPv6, WebRTC, storage, permissions, fingerprinting, identity mixing, Tor isolation, downgrade paths, and error handling.

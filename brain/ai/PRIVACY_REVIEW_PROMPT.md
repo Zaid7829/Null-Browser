@@ -1,0 +1,1 @@
+Review the implementation specifically for privacy regressions and information leaks. Do not accept claims without evidence. Check network, storage, fingerprint, location, locale, timezone, language, permissions, telemetry, and identity correlation.

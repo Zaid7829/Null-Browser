@@ -1,0 +1,1 @@
+Read the relevant brain documents first. Do not code immediately. Analyze the actual Firefox/Gecko architecture, verify the source tree, identify the smallest correct integration point, threat model, tests, and failure behavior.

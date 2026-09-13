@@ -1,0 +1,1 @@
+Design deterministic tests covering positive behavior, negative behavior, bypasses, failures, mode transitions, regression, and cross-platform differences. Never report a test as passing without execution.
