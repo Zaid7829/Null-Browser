@@ -1,10 +1,13 @@
+# Upstream Source
+/firefox/
+
 # Build & Output
-obj-*/
-dist/
-build/
-out/
-bin/
-target/
+/obj-*/
+/dist/
+/build/
+/out/
+/bin/
+/target/
 *.obj
 *.o
 *.lib
