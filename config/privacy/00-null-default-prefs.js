@@ -1,4 +1,4 @@
-﻿// =============================================================================
+// =============================================================================
 // Null Browser - Default Privacy & Security Policy Configuration
 // Step 5: Authoritative Default Preferences
 // Target Engine: Firefox ESR 153.4.0
@@ -97,6 +97,11 @@ pref("privacy.resistFingerprinting", true);
 pref("privacy.resistFingerprinting.pbmode", true);
 pref("privacy.resistFingerprinting.block_mozAddonManager", true);
 pref("privacy.resistFingerprinting.exemptedDomains", "");
+pref("privacy.spoof_english", 2);
+pref("privacy.resistFingerprinting.reduceTimerPrecision.microseconds", 1000);
+pref("privacy.resistFingerprinting.reduceTimerPrecision.jitter", true);
+pref("layout.css.font-visibility", 1);
+pref("webgl.enable-debug-renderer-info", false);
 pref("privacy.trackingprotection.enabled", true);
 pref("privacy.trackingprotection.pbmode.enabled", true);
 
@@ -105,7 +110,10 @@ pref("privacy.trackingprotection.pbmode.enabled", true);
 // Hard-disable hardware geolocation sensors and system location providers.
 // -----------------------------------------------------------------------------
 pref("geo.enabled", false);
+pref("permissions.default.geo", 2);
 pref("geo.provider.ms-windows-location", false);
+pref("geo.provider.use_winrt", false);
+pref("geo.provider.use_geoclue", false);
 pref("geo.provider.network.url", "");
 
 // -----------------------------------------------------------------------------

@@ -135,12 +135,27 @@ class TestDefaultPreferences(unittest.TestCase):
         self.assertTrue(self.prefs.get("privacy.resistFingerprinting.pbmode"))
         self.assertTrue(self.prefs.get("privacy.resistFingerprinting.block_mozAddonManager"))
         self.assertEqual(self.prefs.get("privacy.resistFingerprinting.exemptedDomains"), "")
+        self.assertEqual(self.prefs.get("privacy.spoof_english"), 2)
+        self.assertEqual(
+            self.prefs.get(
+                "privacy.resistFingerprinting.reduceTimerPrecision.microseconds"
+            ),
+            1000,
+        )
+        self.assertTrue(
+            self.prefs.get("privacy.resistFingerprinting.reduceTimerPrecision.jitter")
+        )
+        self.assertEqual(self.prefs.get("layout.css.font-visibility"), 1)
+        self.assertFalse(self.prefs.get("webgl.enable-debug-renderer-info"))
         self.assertTrue(self.prefs.get("privacy.trackingprotection.enabled"))
 
     def test_10_geolocation_device_denial(self):
         """Verify real device geolocation is hard-denied and providers stripped."""
         self.assertFalse(self.prefs.get("geo.enabled"))
+        self.assertEqual(self.prefs.get("permissions.default.geo"), 2)
         self.assertFalse(self.prefs.get("geo.provider.ms-windows-location"))
+        self.assertFalse(self.prefs.get("geo.provider.use_winrt"))
+        self.assertFalse(self.prefs.get("geo.provider.use_geoclue"))
         self.assertEqual(self.prefs.get("geo.provider.network.url"), "")
 
     def test_11_telemetry_and_analytics_disabled(self):
