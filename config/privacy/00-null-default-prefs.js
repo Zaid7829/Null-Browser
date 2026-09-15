@@ -1,4 +1,4 @@
-// =============================================================================
+﻿// =============================================================================
 // Null Browser - Default Privacy & Security Policy Configuration
 // Step 5: Authoritative Default Preferences
 // Target Engine: Firefox ESR 153.4.0
@@ -53,6 +53,9 @@ pref("dom.security.https_only_mode", true);
 pref("dom.security.https_only_mode_pbm", true);
 pref("dom.security.https_only_mode_error_page_user_suggestions", false);
 pref("dom.security.https_only_mode_send_http_background_request", false);
+pref("security.mixed_content.block_active_content", true);
+pref("security.mixed_content.block_display_content", true);
+pref("security.cert_pinning.enforcement_level", 2);
 
 // -----------------------------------------------------------------------------
 // 6. TRR Mode 3 (DNS-over-HTTPS Fail-Closed)
@@ -61,6 +64,7 @@ pref("dom.security.https_only_mode_send_http_background_request", false);
 pref("network.trr.mode", 3);
 pref("network.trr.uri", "https://mozilla.cloudflare-dns.com/dns-query");
 pref("network.trr.default_provider_uri", "https://mozilla.cloudflare-dns.com/dns-query");
+pref("network.trr.fallback-on-zero-response", false);
 
 // -----------------------------------------------------------------------------
 // 7. IPv6 DNS AAAA Query Suppression
@@ -68,6 +72,11 @@ pref("network.trr.default_provider_uri", "https://mozilla.cloudflare-dns.com/dns
 // -----------------------------------------------------------------------------
 pref("network.dns.disableIPv6", true);
 pref("network.dns.preferIPv6", false);
+pref("network.connectivity-service.enabled", false);
+pref("network.captive-portal-service.enabled", false);
+pref("network.dns.disablePrefetch", true);
+pref("network.dns.disablePrefetchFromHTTPS", true);
+pref("network.http.speculative-parallel-limit", 0);
 
 // -----------------------------------------------------------------------------
 // 8. WebRTC Host-Address & Candidate Protection

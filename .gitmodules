@@ -1,0 +1,4 @@
+[submodule "firefox"]
+	path = firefox
+	url = https://github.com/Zaid7829/firefox-null.git
+	branch = null-esr153
