@@ -1,0 +1,103 @@
+# THIRD-PARTY SOFTWARE NOTICES AND INFORMATION FOR BUNDLED TOR RUNTIME
+
+Null Browser bundles an official standalone distribution of the Tor daemon for use in Ghost Mode.
+Source: The Tor Project (https://www.torproject.org/)
+Release: Tor Expert Bundle windows-x86_64 15.0.23 (Tor 0.4.9.12)
+Official Upstream Archive: https://dist.torproject.org/torbrowser/15.0.23/tor-expert-bundle-windows-x86_64-15.0.23.tar.gz
+Upstream Source Repository: https://gitlab.torproject.org/tpo/core/tor (tag tor-0.4.9.12)
+
+The redistributed tor.exe reports GPLv3 coverage for this official build; the Tor source tree contains components under multiple applicable licenses. See the accompanying upstream notices and corresponding-source information.
+
+Null Browser does not modify the Tor source code or binary. The Tor executable is invoked solely
+as an independent subprocess via standard inter-process communication pipes (mere aggregation).
+
+===============================================================================
+1. REDISTRIBUTED BINARY BUILD (tor.exe)
+===============================================================================
+Official Tor Expert Bundle binaries compiled by The Tor Project enable the Onion Service
+Proof-of-Work (PoW) DoS defense mechanism (using Equi-X and HashX). Consequently, official
+Tor Project binaries report coverage under the GNU General Public License v3 (GPLv3).
+The full GPLv3 license is available at: https://www.gnu.org/licenses/gpl-3.0.en.html
+
+Redistribution & Aggregation Terms:
+Null Browser bundles the unmodified Tor executable as a separate standalone program.
+Under GPLv3 Section 5 ("mere aggregation"), inclusion of a GPL-covered program in an aggregate
+with independent works does not cause GPLv3 to apply to the other parts of the aggregate.
+In accordance with GPLv3 Section 6, the complete corresponding source code for the official
+Tor build is publicly available from The Tor Project at:
+- https://dist.torproject.org/torbrowser/15.0.23/
+- https://gitlab.torproject.org/tpo/core/tor (tag tor-0.4.9.12)
+
+===============================================================================
+2. TOR SOURCE TREE COMPONENTS
+===============================================================================
+The Tor source tree contains components under multiple applicable licenses.
+The core Tor source code is distributed under the 3-clause BSD license:
+
+Copyright (c) 2001-2004, Roger Dingledine
+Copyright (c) 2004-2006, Roger Dingledine, Nick Mathewson
+Copyright (c) 2007-2019, The Tor Project, Inc.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+
+    * Redistributions of source code must retain the above copyright
+notice, this list of conditions and the following disclaimer.
+
+    * Redistributions in binary form must reproduce the above
+copyright notice, this list of conditions and the following disclaimer
+in the documentation and/or other materials provided with the
+distribution.
+
+    * Neither the names of the copyright owners nor the names of its
+contributors may be used to endorse or promote products derived from
+this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+Additional internal subcomponents in the Tor source tree are licensed under various
+permissive terms (including MIT, CC0, ISC, and Public Domain). For the complete
+inventory of upstream subcomponent notices, see docs/tor.txt.
+
+===============================================================================
+3. OPENSSL
+===============================================================================
+Tor is statically linked against OpenSSL 3.5.8.
+Copyright (c) 1998-2026 The OpenSSL Project. All rights reserved.
+Licensed under the Apache License 2.0.
+See docs/openssl.txt for complete license text.
+
+===============================================================================
+4. LIBEVENT
+===============================================================================
+Tor is statically linked against Libevent 2.1.13-stable.
+Copyright (c) 2000-2007 Niels Provos <provos@citi.umich.edu>
+Copyright (c) 2007-2012 Niels Provos and Nick Mathewson
+Licensed under the 3-clause BSD license.
+See docs/libevent.txt for complete license text.
+
+===============================================================================
+5. ZLIB
+===============================================================================
+Tor is statically linked against Zlib 1.3.2.
+Copyright (C) 1995-2024 Jean-loup Gailly and Mark Adler.
+Licensed under the zlib license.
+See docs/zlib.txt for complete license text.
+
+===============================================================================
+6. TRADEMARK NOTICE
+===============================================================================
+"Tor" and the "Tor Onion Logo" are registered trademarks of The Tor Project, Inc.
+Null Browser is an independent project and is NOT endorsed, sponsored, or affiliated
+with The Tor Project.

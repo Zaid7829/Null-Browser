@@ -311,29 +311,32 @@ class TestGhostModeCore(unittest.TestCase):
 
     def test_06_tor_supervisor_missing_binary_fails_closed(self):
         """[INTEGRATION] Verify fail-closed behavior when official Tor executable cannot be found."""
+        from unittest.mock import patch
+        tor_mod = importlib.import_module("ghost-mode.tor.supervisor")
         bogus_config = TorConfig(binary_path=r"C:\non_existent_path\tor.exe")
-        supervisor = TorSupervisor(config=bogus_config)
+        with patch.object(tor_mod, "find_tor_binary", return_value=None):
+            supervisor = TorSupervisor(config=bogus_config)
 
-        self.assertFalse(supervisor.is_available())
-        with self.assertRaises(TorExecutableNotFoundError):
-            supervisor.start()
+            self.assertFalse(supervisor.is_available())
+            with self.assertRaises(TorExecutableNotFoundError):
+                supervisor.start()
 
-        self.assertFalse(supervisor.is_running)
-        self.assertFalse(supervisor.is_bootstrapped)
+            self.assertFalse(supervisor.is_running)
+            self.assertFalse(supervisor.is_bootstrapped)
 
-        # Test GhostModeManager fail-closed handling
-        manager = GhostModeManager(tor_config=bogus_config)
-        self.assertEqual(manager.current_state, GhostState.DISABLED)
+            # Test GhostModeManager fail-closed handling
+            manager = GhostModeManager(tor_config=bogus_config)
+            self.assertEqual(manager.current_state, GhostState.DISABLED)
 
-        with self.assertRaises(GhostModeError) as ctx:
-            manager.enable_ghost_mode()
+            with self.assertRaises(GhostModeError) as ctx:
+                manager.enable_ghost_mode()
 
-        self.assertIn("Tor binary not found", str(ctx.exception))
-        # Manager must roll back to DISABLED and not leave active state
-        self.assertEqual(manager.current_state, GhostState.DISABLED)
-        self.assertFalse(manager.is_ghost_mode_active)
-        self.assertFalse(manager.is_ghost_mode_ready)
-        self.assertIsNone(manager.active_profile_path)
+            self.assertIn("Tor binary not found", str(ctx.exception))
+            # Manager must roll back to DISABLED and not leave active state
+            self.assertEqual(manager.current_state, GhostState.DISABLED)
+            self.assertFalse(manager.is_ghost_mode_active)
+            self.assertFalse(manager.is_ghost_mode_ready)
+            self.assertIsNone(manager.active_profile_path)
 
     def test_07_tor_supervisor_simulated_lifecycle_and_unexpected_exit(self):
         """[MOCK/SIMULATION] Verify supervisor bootstrap detection, listener check, and unexpected exit handling using a simulated mock daemon (NOT real Tor binary)."""

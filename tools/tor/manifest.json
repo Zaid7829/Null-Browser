@@ -1,0 +1,68 @@
+{
+  "release_identifier": "15.0.23",
+  "archive_filename": "tor-expert-bundle-windows-x86_64-15.0.23.tar.gz",
+  "archive_sha256": "231dad6b9cb401a54c260db7046965ef04e4f72ff071b140d423fb5da281ab1e",
+  "source_url": "https://dist.torproject.org/torbrowser/15.0.23/tor-expert-bundle-windows-x86_64-15.0.23.tar.gz",
+  "signature_url": "https://dist.torproject.org/torbrowser/15.0.23/tor-expert-bundle-windows-x86_64-15.0.23.tar.gz.asc",
+  "checksum_manifest_url": "https://dist.torproject.org/torbrowser/15.0.23/sha256sums-unsigned-build.txt",
+  "signing_key_fingerprint": "EF6E286DDA85EA2A4BA7DE684E2C6E8793298290",
+  "signing_key_uid": "Tor Browser Developers (signing key) <torbrowser@torproject.org>",
+  "acquisition_timestamp": "2026-09-16T10:39:54Z",
+  "tor_daemon_version": "0.4.9.12 (git-78923280eed3eff6)",
+  "pe_architecture": "x86_64 / IMAGE_FILE_MACHINE_AMD64",
+  "packaged_files": {
+    "tor.exe": {
+      "size_bytes": 10222592,
+      "sha256": "60c45b01938c799862e511a9a5bab12f959a819c6264a24502edc342165f570c",
+      "pe_architecture": "x86_64",
+      "required_runtime": true,
+      "purpose": "Core Tor onion routing daemon executable"
+    },
+    "geoip": {
+      "size_bytes": 9699850,
+      "sha256": "25a69c1dc1d946bfdb0b1ba628db36e9668c51639963c2ee2afda7dc857f66a5",
+      "required_runtime": true,
+      "purpose": "IPv4 country-level geolocation database"
+    },
+    "geoip6": {
+      "size_bytes": 16236188,
+      "sha256": "0a3b61ba326550d66a4c805563be25e28f1d59e5cdfc06b091bfdd9ea2c8f998",
+      "required_runtime": true,
+      "purpose": "IPv6 country-level geolocation database"
+    },
+    "docs/tor.txt": {
+      "size_bytes": 21086,
+      "sha256": "5dc29ea302cc75db6db4a7c88d7b5d4638b4e0f5f1d2e6d21ce71f707470b766",
+      "required_runtime": false,
+      "purpose": "Official Tor license and copyright notices"
+    },
+    "docs/openssl.txt": {
+      "size_bytes": 10175,
+      "sha256": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a",
+      "required_runtime": false,
+      "purpose": "OpenSSL license notices"
+    },
+    "docs/libevent.txt": {
+      "size_bytes": 4528,
+      "sha256": "ff02effc9b331edcdac387d198691bfa3e575e7d244ad10cb826aa51ef085670",
+      "required_runtime": false,
+      "purpose": "libevent 3-clause BSD license notice"
+    },
+    "docs/zlib.txt": {
+      "size_bytes": 1002,
+      "sha256": "e32ff4e00d9d94930537635291da39e7e612703334bf6fde8c7f1686fe8a45a2",
+      "required_runtime": false,
+      "purpose": "zlib license notice"
+    }
+  },
+  "excluded_archive_files": {
+    "tor/tor-gencert.exe": "Intentionally excluded from current Null Browser Windows direct-routing build: authority certificate generator not utilized in client proxy routing",
+    "tor/pluggable_transports/conjure-client.exe": "Intentionally excluded from current Null Browser Windows direct-routing build: pluggable transport binary (conjure) not utilized in direct Tor SOCKS5 routing",
+    "tor/pluggable_transports/lyrebird.exe": "Intentionally excluded from current Null Browser Windows direct-routing build: pluggable transport binary (obfs4/snowflake/webtunnel) not utilized in direct Tor SOCKS5 routing",
+    "tor/pluggable_transports/pt_config.json": "Intentionally excluded from current Null Browser Windows direct-routing build: pluggable transport configuration not utilized in direct Tor SOCKS5 routing",
+    "tor/pluggable_transports/README.CONJURE.md": "Intentionally excluded from current Null Browser Windows direct-routing build: pluggable transport documentation not utilized in direct Tor SOCKS5 routing",
+    "docs/conjure.txt": "Intentionally excluded from current Null Browser Windows direct-routing build: license notice for omitted conjure pluggable transport",
+    "docs/lyrebird.txt": "Intentionally excluded from current Null Browser Windows direct-routing build: license notice for omitted lyrebird pluggable transport",
+    "data/torrc-defaults": "Intentionally excluded from current Null Browser Windows direct-routing build: default torrc template omitted in favor of supervisor-enforced isolated command-line parameters"
+  }
+}
