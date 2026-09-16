@@ -175,7 +175,14 @@ class GhostModeManager:
             except StateTransitionError:
                 self.state_machine.force_reset()
 
-    def launch_firefox(self, firefox_binary: str, additional_args: Optional[List[str]] = None) -> subprocess.Popen:
+    def launch_firefox(
+        self,
+        firefox_binary: str,
+        additional_args: Optional[List[str]] = None,
+        env: Optional[dict] = None,
+        stdout=None,
+        stderr=None,
+    ) -> subprocess.Popen:
         """
         Launches Firefox in Ghost Mode with dedicated ephemeral profile and session isolation.
         Tracks the launched process to ensure fail-closed termination.
@@ -189,7 +196,7 @@ class GhostModeManager:
                 args.extend(additional_args)
 
             try:
-                proc = subprocess.Popen(args)
+                proc = subprocess.Popen(args, env=env, stdout=stdout, stderr=stderr)
                 self._firefox_process = proc
                 return proc
             except Exception as e:
