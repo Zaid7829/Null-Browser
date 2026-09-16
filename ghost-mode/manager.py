@@ -11,6 +11,7 @@ Ensures Ghost Mode is strictly OPTIONAL and never becomes default.
 """
 
 import os
+import subprocess
 import threading
 from typing import List, Optional
 
@@ -21,6 +22,8 @@ from .tor.supervisor import (
     TorSupervisorError,
     TorExecutableNotFoundError,
     TorBootstrapError,
+    TorPortConflictError,
+    TorProcessState,
 )
 from .profile.profile_manager import GhostProfileManager
 from .diagnostics.diagnostics import GhostDiagnostics
@@ -52,7 +55,7 @@ class GhostModeManager:
         # Initialize Ephemeral Profile Manager
         self.profile_manager = GhostProfileManager(
             socks_host=self.supervisor.config.socks_host,
-            socks_port=self.supervisor.config.socks_port,
+            socks_port=self.supervisor.config.socks_port or 9050,
             downloads_dir=downloads_dir,
         )
 
@@ -64,6 +67,7 @@ class GhostModeManager:
         )
 
         self._active_profile_path: Optional[str] = None
+        self._firefox_process: Optional[subprocess.Popen] = None
 
     @property
     def is_ghost_mode_active(self) -> bool:
@@ -83,13 +87,22 @@ class GhostModeManager:
     def active_profile_path(self) -> Optional[str]:
         return self._active_profile_path
 
+    @property
+    def last_error(self) -> Optional[str]:
+        return self.state_machine.last_error
+
+    @property
+    def is_firefox_running(self) -> bool:
+        with self._lock:
+            return self._firefox_process is not None and self._firefox_process.poll() is None
+
     def enable_ghost_mode(self) -> str:
         """
         Activates Ghost Mode:
         1. Transitions state DISABLED -> STARTING.
         2. Spawns Tor and transitions STARTING -> TOR_BOOTSTRAPPING.
-        3. Waits for Tor to reach 100% bootstrap and verifies SOCKS listener.
-        4. Creates ephemeral profile with Tor SOCKS5 and remote DNS prefs.
+        3. Waits for Tor to reach 100% bootstrap and verifies owned SOCKS listener.
+        4. Synchronizes ephemeral profile with active Tor SOCKS port.
         5. Transitions TOR_BOOTSTRAPPING -> READY.
         6. Returns ephemeral profile directory path.
 
@@ -130,9 +143,10 @@ class GhostModeManager:
         """
         Deactivates Ghost Mode:
         1. Transitions READY/STARTING -> STOPPING.
-        2. Cleans up ephemeral profile (strictly preserving downloads).
-        3. Stops Tor process supervisor.
-        4. Transitions STOPPING -> DISABLED.
+        2. Terminates owned Firefox session if running.
+        3. Cleans up ephemeral profile (strictly preserving downloads).
+        4. Stops Tor process supervisor and verifies process termination.
+        5. Transitions STOPPING -> DISABLED.
         """
         with self._lock:
             if self.state_machine.current_state == GhostState.DISABLED:
@@ -143,6 +157,9 @@ class GhostModeManager:
             except StateTransitionError:
                 # If in abnormal state, force reset
                 self.state_machine.force_reset("Disabling from abnormal state")
+
+            # Terminate owned Firefox process
+            self._terminate_firefox()
 
             # Clean up ephemeral profile data
             if self._active_profile_path:
@@ -158,6 +175,27 @@ class GhostModeManager:
             except StateTransitionError:
                 self.state_machine.force_reset()
 
+    def launch_firefox(self, firefox_binary: str, additional_args: Optional[List[str]] = None) -> subprocess.Popen:
+        """
+        Launches Firefox in Ghost Mode with dedicated ephemeral profile and session isolation.
+        Tracks the launched process to ensure fail-closed termination.
+        """
+        with self._lock:
+            if not self.state_machine.is_ready or not self._active_profile_path:
+                raise GhostModeError("Cannot launch Firefox: Ghost Mode is not ready.")
+
+            args = [firefox_binary] + self.get_firefox_launch_args()
+            if additional_args:
+                args.extend(additional_args)
+
+            try:
+                proc = subprocess.Popen(args)
+                self._firefox_process = proc
+                return proc
+            except Exception as e:
+                self.disable_ghost_mode()
+                raise GhostModeError(f"Failed to launch Firefox in Ghost Mode: {e}") from e
+
     def get_firefox_launch_args(self) -> List[str]:
         """
         Returns the command-line arguments to pass to the Firefox executable for Ghost Mode:
@@ -170,8 +208,25 @@ class GhostModeManager:
 
             return ["-no-remote", "-profile", self._active_profile_path]
 
+    def _terminate_firefox(self) -> None:
+        """Safely terminates the owned Firefox process if active."""
+        proc = self._firefox_process
+        self._firefox_process = None
+        if proc and proc.poll() is None:
+            try:
+                proc.terminate()
+                proc.wait(timeout=3.0)
+            except Exception:
+                try:
+                    proc.kill()
+                    proc.wait(timeout=2.0)
+                except Exception:
+                    pass
+
     def _cleanup_on_failure(self, error_message: str) -> None:
         """Fail-closed rollback on startup error."""
+        self._terminate_firefox()
+
         if self._active_profile_path:
             self.profile_manager.cleanup(self._active_profile_path)
             self._active_profile_path = None
@@ -182,10 +237,14 @@ class GhostModeManager:
     def _handle_tor_unexpected_exit(self, exit_code: int, error_msg: str) -> None:
         """
         Called when Tor process terminates unexpectedly while active.
-        Enforces FAIL-CLOSED: immediately disables Ghost Mode and wipes ephemeral profile.
+        Enforces FAIL-CLOSED: immediately terminates Firefox, wipes ephemeral profile,
+        and transitions state back to DISABLED.
         """
         with self._lock:
             if self.state_machine.is_active:
+                # Terminate running Firefox process immediately to prevent direct unproxied traffic
+                self._terminate_firefox()
+
                 if self._active_profile_path:
                     self.profile_manager.cleanup(self._active_profile_path)
                     self._active_profile_path = None

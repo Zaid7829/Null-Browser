@@ -46,6 +46,7 @@ class GhostDiagnostics:
             "tor_daemon": {
                 "available": tor_status["available"],
                 "process_running": tor_status["process_running"],
+                "process_state": tor_status.get("process_state", "UNKNOWN"),
                 "pid": tor_status["pid"],
                 "socks_listener": tor_status["socks_listener"],
                 "bootstrapped_100": tor_status["bootstrapped_100"],
