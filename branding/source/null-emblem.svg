@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bezelGrad" x1="15%" y1="10%" x2="85%" y2="90%">
+      <stop offset="0%" stop-color="#475569"/>
+      <stop offset="25%" stop-color="#1e293b"/>
+      <stop offset="60%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+
+    <linearGradient id="rimCyanGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.9"/>
+      <stop offset="35%" stop-color="#0284c7" stop-opacity="0.35"/>
+      <stop offset="70%" stop-color="#0369a1" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.75"/>
+    </linearGradient>
+
+    <radialGradient id="discGrad" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#141c2b"/>
+      <stop offset="55%" stop-color="#0b0f19"/>
+      <stop offset="100%" stop-color="#030509"/>
+    </radialGradient>
+
+    <linearGradient id="leftPillarHi" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#64748b"/>
+      <stop offset="50%" stop-color="#475569"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+
+    <linearGradient id="leftPillarSh" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+
+    <linearGradient id="rightPillarSh" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+
+    <linearGradient id="rightPillarHi" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#475569"/>
+      <stop offset="50%" stop-color="#334155"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+
+    <linearGradient id="diagHi" x1="10%" y1="0%" x2="90%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="25%" stop-color="#cbd5e1"/>
+      <stop offset="60%" stop-color="#64748b"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+
+    <linearGradient id="diagSh" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="60%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+
+    <linearGradient id="cyanLine" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a5f3fc"/>
+      <stop offset="40%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+  </defs>
+
+  <circle cx="256" cy="256" r="236" fill="none" stroke="url(#rimCyanGlow)" stroke-width="2.5" opacity="0.65"/>
+  <circle cx="256" cy="256" r="230" fill="url(#bezelGrad)"/>
+  <circle cx="256" cy="256" r="218" fill="#04060a"/>
+  <circle cx="256" cy="256" r="214" fill="url(#discGrad)"/>
+  <circle cx="256" cy="256" r="214" fill="none" stroke="#1e293b" stroke-width="1.5"/>
+
+  <g id="emblem-glyph">
+    <polygon points="144,142 174,118 174,394 144,370" fill="url(#leftPillarHi)"/>
+    <polygon points="174,118 202,138 202,374 174,394" fill="url(#leftPillarSh)"/>
+    <line x1="144" y1="142" x2="144" y2="370" stroke="url(#cyanLine)" stroke-width="3" stroke-linecap="round"/>
+
+    <polygon points="310,138 338,118 338,394 310,374" fill="url(#rightPillarSh)"/>
+    <polygon points="338,118 368,142 368,370 338,394" fill="url(#rightPillarHi)"/>
+    <line x1="368" y1="142" x2="368" y2="370" stroke="url(#cyanLine)" stroke-width="3" stroke-linecap="round"/>
+
+    <polygon points="144,142 202,138 368,370 310,374" fill="url(#diagSh)"/>
+    <polygon points="174,118 226,118 368,336 368,370 338,394 174,166" fill="url(#diagHi)"/>
+    <line x1="174" y1="118" x2="368" y2="370" stroke="url(#cyanLine)" stroke-width="3" stroke-linecap="round"/>
+  </g>
+</svg>

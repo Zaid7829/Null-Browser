@@ -1,0 +1,136 @@
+{
+  "schema_version": "1.0.0",
+  "project": "Null Browser",
+  "branding_release": "Step 9.5 Production Assets",
+  "asset_count": 16,
+  "assets": [
+    {
+      "asset_path": "branding/reference/null-browser-approved.png",
+      "format": "PNG",
+      "dimensions": "1024x1024",
+      "intended_use": "Approved visual reference raster master for Null Browser production branding",
+      "sha256": "a95e7905dd11e0fe21e1ef5cc4ad317cfe6afa255a801153c1dd95df3c5957a0",
+      "source_asset": "User provided conversation reference (media_1789566429690.jpg)"
+    },
+    {
+      "asset_path": "branding/source/null-emblem.svg",
+      "format": "SVG",
+      "dimensions": "512x512 (scalable vector)",
+      "intended_use": "Primary brand emblem vector master (circular dark metallic form, geometric N, cool-blue edge lighting)",
+      "sha256": "87aaa4761246bd7cc2ebbefe6a190ce2108e5e844cbb389eefec541bc2041624",
+      "source_asset": "branding/reference/null-browser-approved.png"
+    },
+    {
+      "asset_path": "branding/source/null-wordmark.svg",
+      "format": "SVG",
+      "dimensions": "640x80 (scalable vector)",
+      "intended_use": "Wordmark vector master ('NULL BROWSER' in geometric sans-serif titanium typography)",
+      "sha256": "e78a0a3830faf8006b298d04a16c736d6165e16b99f9ddd20253af0bb5dfe989",
+      "source_asset": "branding/reference/null-browser-approved.png"
+    },
+    {
+      "asset_path": "branding/source/null-lockup.svg",
+      "format": "SVG",
+      "dimensions": "600x680 (scalable vector)",
+      "intended_use": "Complete brand lockup vector master (emblem, wordmark, and 'PRIVACY WITHOUT COMPROMISE' tagline)",
+      "sha256": "3047fd2d6be9899ed37b27f7f231ac1ffab9dd7583272037e40746635c736472",
+      "source_asset": "branding/reference/null-browser-approved.png"
+    },
+    {
+      "asset_path": "branding/raster/app-icon-16.png",
+      "format": "PNG",
+      "dimensions": "16x16",
+      "intended_use": "Windows application window / taskbar / tab icon (16px, simplified high-contrast silhouette for legibility)",
+      "sha256": "2da181a76f2029c4c775c226f882094f8f40ea16464c1bdfb0c1ad71204072e3",
+      "source_asset": "branding/source/null-emblem.svg"
+    },
+    {
+      "asset_path": "branding/raster/app-icon-22.png",
+      "format": "PNG",
+      "dimensions": "22x22",
+      "intended_use": "Application toolbar / UI icon (22px)",
+      "sha256": "b7a6fc5d55c9f007a4a093c0f976b433615432d595c6339166414f70d63853cc",
+      "source_asset": "branding/source/null-emblem.svg"
+    },
+    {
+      "asset_path": "branding/raster/app-icon-24.png",
+      "format": "PNG",
+      "dimensions": "24x24",
+      "intended_use": "Application toolbar / notification area icon (24px)",
+      "sha256": "cfc530aca81e644416cba6608280c09c5dbffe5eb5c5fc8453f2be139e2bbef5",
+      "source_asset": "branding/source/null-emblem.svg"
+    },
+    {
+      "asset_path": "branding/raster/app-icon-32.png",
+      "format": "PNG",
+      "dimensions": "32x32",
+      "intended_use": "Windows taskbar / standard icon (32px, hand-hinted for legibility)",
+      "sha256": "0c8ae096a23439fb70557207a6238ea7e8002839f691a87f90b060bbd125022c",
+      "source_asset": "branding/source/null-emblem.svg"
+    },
+    {
+      "asset_path": "branding/raster/app-icon-48.png",
+      "format": "PNG",
+      "dimensions": "48x48",
+      "intended_use": "Windows Explorer icon / desktop standard (48px)",
+      "sha256": "90a519a9f48065508c2bfb4b551e129c5e4efc06700107b2caf19d5619013fca",
+      "source_asset": "branding/source/null-emblem.svg"
+    },
+    {
+      "asset_path": "branding/raster/app-icon-64.png",
+      "format": "PNG",
+      "dimensions": "64x64",
+      "intended_use": "High-DPI application icon (64px)",
+      "sha256": "1072f0fb5277cd88653c4b88b240b4af2c910151d7ddf29e74867272f9153cec",
+      "source_asset": "branding/source/null-emblem.svg"
+    },
+    {
+      "asset_path": "branding/raster/app-icon-128.png",
+      "format": "PNG",
+      "dimensions": "128x128",
+      "intended_use": "Large application icon / distribution package asset (128px)",
+      "sha256": "8e333d91376dcbe0f6e61acd501be1b89f231cc84518463461c1c2fcb66fe2c4",
+      "source_asset": "branding/source/null-emblem.svg"
+    },
+    {
+      "asset_path": "branding/raster/app-icon-256.png",
+      "format": "PNG",
+      "dimensions": "256x256",
+      "intended_use": "Extra large application icon / Windows modern desktop master (256px)",
+      "sha256": "6d9d57b777c348950f50c84341937584f8c2e0dde53dde68d8bc150a381082ca",
+      "source_asset": "branding/source/null-emblem.svg"
+    },
+    {
+      "asset_path": "branding/raster/about-logo-192.png",
+      "format": "PNG",
+      "dimensions": "192x192",
+      "intended_use": "Firefox/Null About dialog logo 1x (192px)",
+      "sha256": "30514092b5e7423e82aeeddf49536a142259e8e79db7857b1382255cc20ccceb",
+      "source_asset": "branding/source/null-emblem.svg"
+    },
+    {
+      "asset_path": "branding/raster/about-logo-384.png",
+      "format": "PNG",
+      "dimensions": "384x384",
+      "intended_use": "Firefox/Null About dialog logo 2x (384px)",
+      "sha256": "73b1bdf230b92e9b5619967fe1ee3ecced41fd5f0a9ccaaf495cf10747bfec88",
+      "source_asset": "branding/source/null-emblem.svg"
+    },
+    {
+      "asset_path": "branding/raster/visual-elements-70.png",
+      "format": "PNG",
+      "dimensions": "142x142",
+      "intended_use": "Windows Start Menu 70x70 tile 2x asset (142px)",
+      "sha256": "188351dec7356eae415878ab44e6c6d5d3d5fad260ebc2742e075a1bfe3e07cd",
+      "source_asset": "branding/source/null-emblem.svg"
+    },
+    {
+      "asset_path": "branding/raster/visual-elements-150.png",
+      "format": "PNG",
+      "dimensions": "300x300",
+      "intended_use": "Windows Start Menu 150x150 tile 2x asset (300px)",
+      "sha256": "90a70551154eb0823fc3b075fbb007b26c3c9a29b97de8d7b29c3b7721be453a",
+      "source_asset": "branding/source/null-emblem.svg"
+    }
+  ]
+}
