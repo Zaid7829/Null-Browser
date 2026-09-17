@@ -115,7 +115,8 @@ class TestControlPanelFoundation(unittest.TestCase):
 
         self.assertIn('"about:null": {', content)
         self.assertIn('"about:controlpanel": {', content)
-        self.assertIn('RPMSendQuery: ["FetchDiagnostics"]', content)
+        self.assertIn('"FetchDiagnostics"', content)
+        self.assertIn('"FetchPrivacyEvents"', content)
 
     def test_04_actor_implementation_and_factual_payload(self):
         """Verify NullControlPanelParent reads actual browser state and returns sanitized factual payload."""
@@ -123,8 +124,9 @@ class TestControlPanelFoundation(unittest.TestCase):
         with open(actor_path, "r", encoding="utf-8") as f:
             content = f.read()
 
-        # Must respond to FetchDiagnostics
+        # Must respond to FetchDiagnostics and FetchPrivacyEvents
         self.assertIn('if (aMessage.name === "FetchDiagnostics")', content)
+        self.assertIn('if (aMessage.name === "FetchPrivacyEvents")', content)
         # Must read real preferences
         self.assertIn('"privacy.resistFingerprinting"', content)
         self.assertIn('"browser.privatebrowsing.autostart"', content)
