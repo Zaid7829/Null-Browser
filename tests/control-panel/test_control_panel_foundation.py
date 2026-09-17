@@ -128,8 +128,8 @@ class TestControlPanelFoundation(unittest.TestCase):
         # Must read real preferences
         self.assertIn('"privacy.resistFingerprinting"', content)
         self.assertIn('"browser.privatebrowsing.autostart"', content)
+        self.assertIn('"network.proxy.type"', content)
         # Must not expose network IP addresses or sensitive diagnostics
-        self.assertNotIn("network.proxy", content)
         self.assertNotIn("ip_address", content)
         self.assertNotIn("tor_circuit", content)
         self.assertNotIn("anonymity_score", content)
