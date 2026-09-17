@@ -134,3 +134,67 @@ When transitioning to implementation in Step 10.1, the following concrete modifi
    - WebRTC: verify ICE obfuscation and proxy enforcement reporting.
    - Content blocking: verify tracking counts match `TrackingDBService`.
    - Ghost Mode: verify Tor daemon PID, SOCKS5 listener, and circuit status reporting.
+
+---
+
+## 6. Panic Mode Security Architecture
+
+### 6.1 Purpose and Non-Forensic Scope
+Panic Mode (`NullPanicController.sys.mjs`) is an explicit, user-triggered, privileged session cleanup operation accessible from the Control Panel. It is designed solely for rapid, deterministic purging of ephemeral browser session and private temporary state.
+
+**Explicit Non-Claims:**
+- Panic Mode is **not** a forensic wiping tool, zero-trace utility, or OS-level disk sanitization system.
+- It does **not** perform disk overwrite passes, unallocated cluster scrubbing, or Windows registry purging.
+- It does **not** claim or promise complete operational-security anonymity or forensic destruction.
+
+### 6.2 Target Subsystems and Cleanup Actions
+1. **Browser Windows and Tabs (`session`)**:
+   - Enumerates open browser windows via `Services.wm.getEnumerator("navigator:browser")`.
+   - Before closing background tabs, ensures the primary window remains open and resets its active tab to `about:blank`.
+   - Closes background tabs using `{ skipPermitUnload: true }` so that malicious or hung `beforeunload` handlers cannot stall or abort the Panic cleanup sequence.
+   - Clears closed window and closed tab undo buffers in `SessionStore` (`forgetClosedTab`, `forgetClosedWindow`).
+2. **Storage and Caches (`storage`)**:
+   - Executes `Services.clearData.deleteData(...)` using verified `Ci.nsIClearDataService` flags:
+     - `CLEAR_COOKIES`
+     - `CLEAR_DOM_STORAGES`
+     - `CLEAR_ALL_CACHES`
+     - `CLEAR_AUTH_CACHE`
+     - `CLEAR_AUTH_TOKENS`
+     - `CLEAR_MEDIA_DEVICES`
+     - `CLEAR_COOKIE_BANNER_EXECUTED_RECORD`
+     - `CLEAR_FINGERPRINTING_PROTECTION_STATE`
+     - `CLEAR_BOUNCE_TRACKING_PROTECTION_STATE`
+     - `CLEAR_STORAGE_PERMISSIONS`
+   - Does **not** execute direct filesystem deletion of SQLite profile databases.
+3. **Session Permissions (`permissions`)**:
+   - Scans permissions via `Services.perms.all`.
+   - Purges only permissions where `expireType` is `EXPIRE_SESSION` (1) or `EXPIRE_SESSION_TAB` (4).
+   - Strictly preserves persistent user permissions (`EXPIRE_NEVER` = 0, `EXPIRE_POLICY` = 3).
+   - Strips all target origins and hostnames from the return result.
+4. **Ghost Mode and Tor Processes (`ghost`)**:
+   - Inspects active Ghost Mode state. If inactive, records `NOT_ACTIVE`.
+   - If Ghost Mode is active or transitioning (`STARTING`, `TOR_BOOTSTRAPPING`, `READY`, `STOPPING`):
+     - Prevents new Ghost Mode requests.
+     - Gracefully shuts down or terminates strictly the **owned** Ghost Firefox child process and the **owned** Tor daemon process tracked by `TorSupervisor`.
+     - Strictly prohibits killing arbitrary processes by image name (`taskkill /f /im firefox.exe` or `tor.exe`). If process ownership cannot be verified, aborts and reports failure.
+     - Cleans only the ephemeral temporary profile directory tracked by `GhostProfileManager`.
+     - Transitions Ghost lifecycle state to `DISABLED`.
+5. **Live Privacy Event Buffer (`events`)**:
+   - Purges the in-memory circular buffer via `NullPrivacyEventManager.clear()`.
+   - Privacy events are held strictly in memory and are never written to disk.
+   - Does **not** create a persistent audit record of the Panic Mode execution.
+
+### 6.3 Preservation Invariants
+- **User Downloads Preserved**: Downloaded files on disk (in `browser.download.dir`, the user's `Downloads` folder, or custom paths) are strictly preserved and never deleted or modified.
+- **Bookmarks Preserved**: User bookmarks and Places history databases are preserved.
+- **Persistent Permissions Preserved**: User-configured site permissions (such as permanent camera/microphone blocks or exceptions) are preserved.
+- **Profile Integrity Preserved**: Arbitrary files in the user profile are never recursively deleted.
+
+### 6.4 IPC Capability Gate & Reentrancy
+- Exposed via privileged IPC query `TriggerPanicMode`.
+- Strictly gated by `RemotePageAccessManager.sys.mjs` exclusively to `about:null` and `about:controlpanel`.
+- Gated in `NullControlPanelParent.sys.mjs` and executed only in the parent process.
+- Guarded by an internal parent-process reentrancy lock (`sPanicInProgress`). Concurrent calls return an immediate structured rejection: `{ status: "REJECTED", reason: "PANIC_ALREADY_IN_PROGRESS" }`.
+- Returns a minimal, factual result payload:
+  `{ status: "COMPLETED" | "PARTIALLY_COMPLETED" | "FAILED" | "REJECTED", subsystems: { session, storage, permissions, ghost, events } }`.
+- Zero sensitive diagnostic metadata (paths, PIDs, URLs, origins, IPs, ports) is exposed in the result or rendered in the UI.
